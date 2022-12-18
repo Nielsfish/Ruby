@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @gate %>
+
+<div>
+  <%= link_to "Edit this gate", edit_gate_path(@gate) %> |
+  <%= link_to "Back to gates", gates_path %>
+
+  <%= button_to "Destroy this gate", @gate, method: :delete %>
+</div>

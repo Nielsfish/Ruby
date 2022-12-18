@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Gates</h1>
+
+<div id="gates">
+  <% @gates.each do |gate| %>
+    <%= render gate %>
+    <p>
+      <%= link_to "Show this gate", gate %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New gate", new_gate_path %>
