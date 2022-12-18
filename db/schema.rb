@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_18_114117) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_18_215819) do
   create_table "employees", force: :cascade do |t|
     t.integer "employee_id"
     t.integer "user_id", null: false
@@ -71,6 +71,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_18_114117) do
     t.string "account_no"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "password"
   end
 
   create_table "vacations", force: :cascade do |t|
