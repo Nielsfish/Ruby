@@ -1,0 +1,17 @@
+current directory: /Users/jakub/IdeaProjects/AM_Projekt_RCP/ServerApp/vendor/bundle/ruby/3.0.0/gems/racc-1.6.1/ext/racc/cparse
+/Users/jakub/.rvm/rubies/ruby-3.0.0/bin/ruby -I /Users/jakub/.rvm/rubies/ruby-3.0.0/lib/ruby/3.0.0 -r ./siteconf20230105-62962-97bp3x.rb extconf.rb
+checking for rb_block_call()... yes
+checking for rb_ary_subseq()... yes
+creating Makefile
+
+current directory: /Users/jakub/IdeaProjects/AM_Projekt_RCP/ServerApp/vendor/bundle/ruby/3.0.0/gems/racc-1.6.1/ext/racc/cparse
+make "DESTDIR=" clean
+
+current directory: /Users/jakub/IdeaProjects/AM_Projekt_RCP/ServerApp/vendor/bundle/ruby/3.0.0/gems/racc-1.6.1/ext/racc/cparse
+make "DESTDIR="
+compiling cparse.c
+linking shared-object racc/cparse.bundle
+
+current directory: /Users/jakub/IdeaProjects/AM_Projekt_RCP/ServerApp/vendor/bundle/ruby/3.0.0/gems/racc-1.6.1/ext/racc/cparse
+make "DESTDIR=" install
+/usr/local/opt/coreutils/bin/ginstall -c -m 0755 cparse.bundle ./.gem.20230105-62962-z63z7h/racc

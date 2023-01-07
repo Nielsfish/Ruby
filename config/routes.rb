@@ -1,20 +1,22 @@
 Rails.application.routes.draw do
-  root to: 'static#index'
-  
-  get '/login', to: 'sessions#new'
-  post '/login', to: 'sessions#create'
-  get '/logout', to: 'sessions#destroy'
+  root to: proc { [404, {}, ["404"]] }
 
-  resources :registers
-  resources :vacations
-  resources :employees
-  resources :gates
-  resources :positions
-  resources :managers
-  resources :users
-  
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  get '/api' => redirect('/swagger/dist/index.html?url=/api-docs.json')
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  namespace 'v1' do
+    root to: proc { [404, {}, ["404"]] }
+
+    get '/login', to: 'sessions#new'
+    post '/login', to: 'sessions#create'
+    get '/logout', to: 'sessions#destroy'
+
+    resources :registers
+    resources :vacations
+    resources :employees
+    resources :gates
+    resources :positions
+    resources :managers
+    resources :users
+
+    end
 end

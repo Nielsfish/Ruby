@@ -1,0 +1,16 @@
+current directory: /Users/jakub/IdeaProjects/AM_Projekt_RCP/ServerApp/vendor/bundle/ruby/3.0.0/gems/debug-1.7.0/ext/debug
+/Users/jakub/.rvm/rubies/ruby-3.0.0/bin/ruby -I /Users/jakub/.rvm/rubies/ruby-3.0.0/lib/ruby/3.0.0 -r ./siteconf20230105-62962-6nu4ou.rb extconf.rb
+creating Makefile
+
+current directory: /Users/jakub/IdeaProjects/AM_Projekt_RCP/ServerApp/vendor/bundle/ruby/3.0.0/gems/debug-1.7.0/ext/debug
+make "DESTDIR=" clean
+
+current directory: /Users/jakub/IdeaProjects/AM_Projekt_RCP/ServerApp/vendor/bundle/ruby/3.0.0/gems/debug-1.7.0/ext/debug
+make "DESTDIR="
+compiling debug.c
+compiling iseq_collector.c
+linking shared-object debug/debug.bundle
+
+current directory: /Users/jakub/IdeaProjects/AM_Projekt_RCP/ServerApp/vendor/bundle/ruby/3.0.0/gems/debug-1.7.0/ext/debug
+make "DESTDIR=" install
+/usr/local/opt/coreutils/bin/ginstall -c -m 0755 debug.bundle ./.gem.20230105-62962-l6hk2z/debug
