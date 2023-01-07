@@ -6,9 +6,7 @@ Rails.application.routes.draw do
   namespace 'v1' do
     root to: proc { [404, {}, ["404"]] }
 
-    get '/login', to: 'sessions#new'
-    post '/login', to: 'sessions#create'
-    get '/logout', to: 'sessions#destroy'
+    post '/login', to: 'sessions#login'
 
     resources :registers
     resources :vacations

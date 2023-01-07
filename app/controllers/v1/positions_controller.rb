@@ -1,6 +1,7 @@
 module V1
   class PositionsController < ApplicationController
     before_action :set_position, only: %i[ show edit update destroy ]
+    before_action :authenticate_request, only: [ :destroy ]
 
     swagger_controller :positions, 'Positions'
 
@@ -11,6 +12,7 @@ module V1
 
     def index
       @positions = Position.all
+      render json: @positions, status: :ok
     end
 
     # GET /positions/1 or /positions/1.json
@@ -33,7 +35,7 @@ module V1
       @position = Position.new(position_params)
 
       if @position.save
-        render :show, status: :created, location: @position
+        render json: @position, status: :created
       else
         render json: @position.errors, status: :unprocessable_entity
       end
@@ -64,6 +66,7 @@ module V1
 
     def destroy
       @position.destroy
+      render json: {"Status":"Deleted"}, status: :ok
     end
 
     private
