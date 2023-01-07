@@ -77,7 +77,7 @@ module V1
 
       # Only allow a list of trusted parameters through.
       def vacation_params
-        params.require(:vacation).permit(:vacation_id, :employee_id, :start_date, :end_date, :vacation_type, :decision)
+        params.permit(:employee_id, :start_date, :end_date, :vacation_type, :decision)
       end
   end
 end

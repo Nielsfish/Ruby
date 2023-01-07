@@ -74,7 +74,7 @@ module V1
 
       # Only allow a list of trusted parameters through.
       def position_params
-        params.require(:position).permit(:position_id, :position_name, :salary)
+        params.permit(:position_name, :salary)
       end
   end
 end

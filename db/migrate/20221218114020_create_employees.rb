@@ -1,7 +1,6 @@
 class CreateEmployees < ActiveRecord::Migration[7.0]
   def change
     create_table :employees do |t|
-      t.integer :employee_id
       t.references :user, null: false, foreign_key: true
       t.string :department
       t.references :manager, null: false, foreign_key: true

@@ -1,6 +1,5 @@
 module V1
   class UsersController < ApplicationController
-    before_action :set_user, only: %i[ show edit update destroy ]
 
     swagger_controller :users, 'Users'
 
@@ -72,7 +71,7 @@ module V1
 
     private
     def user_params
-      params.require(:user).permit(:login, :first_name, :last_name, :account_type, :email, :account_no, :password, :password_confirmation)
+      params.permit(:login, :first_name, :last_name, :account_type, :email, :account_no, :password, :password_confirmation)
     end
 
     def update_params

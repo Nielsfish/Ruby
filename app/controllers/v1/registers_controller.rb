@@ -76,7 +76,7 @@ module V1
 
       # Only allow a list of trusted parameters through.
       def register_params
-        params.require(:register).permit(:register_id, :employee_id, :gate_id, :date_in, :time_in, :date_out, :time_out)
+        params.permit(:employee_id, :gate_id, :date_in, :time_in, :date_out, :time_out)
       end
   end
 end

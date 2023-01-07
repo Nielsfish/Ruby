@@ -72,7 +72,7 @@ module V1
 
       # Only allow a list of trusted parameters through.
       def manager_params
-        params.require(:manager).permit(:user_id, :manager_id)
+        params.permit(:user_id)
       end
   end
 end

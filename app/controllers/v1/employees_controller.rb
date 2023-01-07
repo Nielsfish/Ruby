@@ -69,7 +69,7 @@ module V1
 
     # Only allow a list of trusted parameters through.
     def employee_params
-      params.require(:employee).permit(:employee_id, :user_id, :department, :manager_id, :position_id)
+      params.permit(:user_id, :department, :manager_id, :position_id)
     end
   end
 end

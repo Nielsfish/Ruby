@@ -65,7 +65,7 @@ module V1
 
       # Only allow a list of trusted parameters through.
       def gate_params
-        params.require(:gate).permit(:gate_id, :user_id)
+        params.permit(:user_id)
       end
   end
 end

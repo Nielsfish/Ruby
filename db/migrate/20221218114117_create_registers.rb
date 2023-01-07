@@ -1,7 +1,6 @@
 class CreateRegisters < ActiveRecord::Migration[7.0]
   def change
     create_table :registers do |t|
-      t.integer :register_id
       t.references :employee, null: false, foreign_key: true
       t.references :gate, null: false, foreign_key: true
       t.date :date_in
