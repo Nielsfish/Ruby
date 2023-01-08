@@ -20,10 +20,6 @@
       "description": "Employees"
     },
     {
-      "path": "/../v1/gates.{format}",
-      "description": "Gates"
-    },
-    {
       "path": "/../v1/positions.{format}",
       "description": "Positions"
     },

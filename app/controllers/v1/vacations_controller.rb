@@ -1,12 +1,14 @@
 module V1
   class VacationsController < ApplicationController
     before_action :set_vacation, only: %i[ show edit update destroy ]
+    before_action :authenticate_request, only: %i[ index show create update destroy ]
 
     swagger_controller :vacations, 'Vacations'
 
-    # GET /vacations or /vacations.json
+    # GET /vacations
     swagger_api :index do
       summary 'Returns all vacations\' details'
+      param :header, :Authorization, :string, :required, "Token"
     end
 
     def index
@@ -14,23 +16,24 @@ module V1
       render json: @vacations, status: :ok
     end
 
-    # GET /vacations/1 or /vacations/1.json
+    # GET /vacations/1
     swagger_api :show do
       summary 'Returns a vacation\'s details'
       param :path, :id, :integer, :required, "User ID"
+      param :header, :Authorization, :string, :required, "Token"
     end
 
     def show
       render json: @vacation, status: :ok
     end
 
-    # GET /vacations/new
+    # POST /vacations
     swagger_api :create do
       summary 'Creates a vacation'
       param :body, :body, :string, :required, "Request body"
+      param :header, :Authorization, :string, :required, "Token"
     end
 
-    # POST /vacations or /vacations.json
     def create
       @vacation = Vacation.new(vacation_params)
       if @vacation.save
@@ -40,12 +43,12 @@ module V1
       end
     end
 
-    # PATCH/PUT /vacations/1 or /vacations/1.json
+    # PATCH/PUT /vacations/1
     swagger_api :update do
       summary 'Updates a vacation\'s details'
       param :path, :id, :integer, :required, "User ID"
       param :body, :body, :string, :required, "Request body"
-      param :header, :Authorization, :string, :required, "Authentication bearer token"
+      param :header, :Authorization, :string, :required, "Token"
     end
 
     def update
@@ -57,25 +60,24 @@ module V1
       end
     end
 
-    # DELETE /vacations/1 or /vacations/1.json
+    # DELETE /vacations/1
     swagger_api :destroy do
       summary 'Deletes a vacation'
       param :path, :id, :integer, :required, "User ID"
-      param :header, :Authorization, :string, :required, "Authentication bearer token"
+      param :header, :Authorization, :string, :required, "Token"
     end
 
     def destroy
       @vacation.destroy
-      render json: { message: 'Successfully deleted' }, status: :ok
+      render json: { "Status":"Deleted" }, status: :ok
     end
 
     private
-      # Use callbacks to share common setup or constraints between actions.
+
       def set_vacation
         @vacation = Vacation.find(params[:id])
       end
 
-      # Only allow a list of trusted parameters through.
       def vacation_params
         params.permit(:employee_id, :start_date, :end_date, :vacation_type, :decision)
       end

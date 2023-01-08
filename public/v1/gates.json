@@ -8,7 +8,7 @@
       "path": "/v1/gates",
       "operations": [
         {
-          "summary": "Returns all gates' details",
+          "summary": "Returns the gates' details",
           "nickname": "V1::Gates#index",
           "method": "get"
         }
@@ -67,7 +67,7 @@
               "paramType": "header",
               "name": "Authorization",
               "type": "string",
-              "description": "Authentication bearer token",
+              "description": "Token",
               "required": true
             }
           ],
@@ -93,7 +93,7 @@
               "paramType": "header",
               "name": "Authorization",
               "type": "string",
-              "description": "Authentication bearer token",
+              "description": "Token",
               "required": true
             }
           ],

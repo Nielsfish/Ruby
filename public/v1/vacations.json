@@ -9,6 +9,15 @@
       "operations": [
         {
           "summary": "Returns all vacations' details",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Token",
+              "required": true
+            }
+          ],
           "nickname": "V1::Vacations#index",
           "method": "get"
         }
@@ -25,6 +34,13 @@
               "name": "body",
               "type": "string",
               "description": "Request body",
+              "required": true
+            },
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Token",
               "required": true
             }
           ],
@@ -44,6 +60,13 @@
               "name": "id",
               "type": "integer",
               "description": "User ID",
+              "required": true
+            },
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Token",
               "required": true
             }
           ],
@@ -76,7 +99,7 @@
               "paramType": "header",
               "name": "Authorization",
               "type": "string",
-              "description": "Authentication bearer token",
+              "description": "Token",
               "required": true
             }
           ],
@@ -102,7 +125,7 @@
               "paramType": "header",
               "name": "Authorization",
               "type": "string",
-              "description": "Authentication bearer token",
+              "description": "Token",
               "required": true
             }
           ],

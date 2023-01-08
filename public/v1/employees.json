@@ -8,7 +8,7 @@
       "path": "/v1/employees",
       "operations": [
         {
-          "summary": "Returns all enployees' details",
+          "summary": "Returns all employees' details",
           "nickname": "V1::Employees#index",
           "method": "get"
         }
@@ -25,6 +25,13 @@
               "name": "body",
               "type": "string",
               "description": "Request body",
+              "required": true
+            },
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Token",
               "required": true
             }
           ],
@@ -76,7 +83,7 @@
               "paramType": "header",
               "name": "Authorization",
               "type": "string",
-              "description": "Authentication bearer token",
+              "description": "Token",
               "required": true
             }
           ],
@@ -102,7 +109,7 @@
               "paramType": "header",
               "name": "Authorization",
               "type": "string",
-              "description": "Authentication bearer token",
+              "description": "Token",
               "required": true
             }
           ],

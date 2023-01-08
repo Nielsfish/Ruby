@@ -26,6 +26,13 @@
               "type": "string",
               "description": "Request body",
               "required": true
+            },
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Token",
+              "required": true
             }
           ],
           "nickname": "V1::Positions#create",
@@ -76,7 +83,7 @@
               "paramType": "header",
               "name": "Authorization",
               "type": "string",
-              "description": "Authentication bearer token",
+              "description": "Token",
               "required": true
             }
           ],
@@ -89,7 +96,7 @@
       "path": "/v1/positions/{id}",
       "operations": [
         {
-          "summary": "Deletes a position ",
+          "summary": "Deletes a position",
           "parameters": [
             {
               "paramType": "path",
@@ -102,7 +109,7 @@
               "paramType": "header",
               "name": "Authorization",
               "type": "string",
-              "description": "Authentication bearer token",
+              "description": "Token",
               "required": true
             }
           ],

@@ -1,19 +1,20 @@
 module V1
   class EmployeesController < ApplicationController
-    before_action :set_employee, only: %i[ show edit update destroy ]
+    before_action :set_employee, only: %i[ show update destroy ]
+    before_action :authenticate_request, only: [ :create, :update, :destroy ]
 
     swagger_controller :employees, 'Employees'
 
-    # GET /employees or /employees.json
+    # GET /employees
     swagger_api :index do
-      summary 'Returns all enployees\' details'
+      summary 'Returns all employees\' details'
     end
     def index
       @employees = Employee.all
       render json: @employees, status: :ok
     end
 
-    # GET /employees/1 or /employees/1.json
+    # GET /employees/1
     swagger_api :show do
       summary 'Returns an employee\'s details'
       param :path, :id, :integer, :required, "User ID"
@@ -22,25 +23,29 @@ module V1
       render json: @employee, status: :ok
     end
 
-    # POST /employees or /employees.json
+    # POST /employees
     swagger_api :create do
       summary 'Creates an employee'
       param :body, :body, :string, :required, "Request body"
+      param :header, :Authorization, :string, :required, "Token"
     end
+
     def create
-      if @employee.update(employee_params)
-        render json: @employee, status: :ok
+      @employee = Employee.new(employee_params)
+
+      if @employee.save
+        render json: @employee, status: :created
       else
         render json: @employee.errors, status: :unprocessable_entity
       end
     end
 
-    # PATCH/PUT /employees/1 or /employees/1.json
+    # PATCH/PUT /employees/1
     swagger_api :update do
       summary 'Updates an employee\'s details'
       param :path, :id, :integer, :required, "User ID"
       param :body, :body, :string, :required, "Request body"
-      param :header, :Authorization, :string, :required, "Authentication bearer token"
+      param :header, :Authorization, :string, :required, "Token"
     end
     def update
       if @employee.update(employee_params)
@@ -54,20 +59,20 @@ module V1
     swagger_api :destroy do
       summary 'Deletes an employee'
       param :path, :id, :integer, :required, "Employee ID"
-      param :header, :Authorization, :string, :required, "Authentication bearer token"
+      param :header, :Authorization, :string, :required, "Token"
     end
 
     def destroy
       @employee.destroy
+      render json: { "Status":"Deleted" }, status: :ok
     end
 
     private
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_employee
       @employee = Employee.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def employee_params
       params.permit(:user_id, :department, :manager_id, :position_id)
     end

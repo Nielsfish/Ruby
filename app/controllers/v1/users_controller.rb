@@ -1,5 +1,7 @@
 module V1
   class UsersController < ApplicationController
+    before_action :authenticate_request, only: [ :destroy ]
+    before_action :authenticate_request, only: %i[ index show create update destroy ]
 
     swagger_controller :users, 'Users'
 
@@ -9,8 +11,8 @@ module V1
     end
 
     def index
-      users = User.all
-      render json: users, only:  [:id, :login, :first_name, :last_name, :account_type, :email, :account_no], status: :ok
+      @users = Employee.all
+      render json: @users, status: :ok
     end
 
     # GET /users/1
@@ -20,8 +22,7 @@ module V1
     end
 
     def show
-      user = User.find(params[:id])
-      render json: user, only:  [:id, :login, :first_name, :last_name, :account_type, :email, :account_no], status: :ok
+      render json: @employee, status: :ok
     end
 
     # POST /users
@@ -31,11 +32,12 @@ module V1
     end
 
     def create
-      user = User.new(user_params)
-      if user.save
-        render json: user, only:  [:id, :login, :first_name, :last_name, :account_type, :email, :account_no], status: :created
+      @user = Employee.new(employee_params)
+
+      if @user.save
+        render json: @user, status: :created
       else
-        render json: user.errors, status: :unprocessable_entity
+        render json: @user.errors, status: :unprocessable_entity
       end
     end
 
@@ -44,15 +46,14 @@ module V1
       summary 'Updates an user\'s details'
       param :path, :id, :integer, :required, "User ID"
       param :body, :body, :string, :required, "Request body"
-      param :header, :Authorization, :string, :required, "Authentication bearer token"
+      param :header, :Authorization, :string, :required, "Token"
     end
 
     def update
-      user = User.find(params[:id])
-      if user.update(update_params)
-        render json: user, only:  [:id, :login, :first_name, :last_name, :account_type, :email, :account_no], status: :created
+      if @user.update(employee_params)
+        render json: @user, status: :ok
       else
-        render json: user.errors, status: :unprocessable_entity
+        render json: @user.errors, status: :unprocessable_entity
       end
     end
 
@@ -60,34 +61,22 @@ module V1
     swagger_api :destroy do
       summary 'Deletes an user'
       param :path, :id, :integer, :required, "User ID"
-      param :header, :Authorization, :string, :required, "Authentication bearer token"
+      param :header, :Authorization, :string, :required, "Token"
     end
 
     def destroy
-      user = User.find(params[:id])
-      user.destroy
-      render json: { "success": "true" }, status: :ok
+      @user.destroy
+      render json: { "Status":"Deleted" }, status: :ok
     end
 
     private
+
     def user_params
       params.permit(:login, :first_name, :last_name, :account_type, :email, :account_no, :password, :password_confirmation)
     end
 
     def update_params
       params.permit(:password, :password_confirmation, :nickname, :bio, :preferred_style)
-    end
-
-    def not_found
-      render json: { "error": "not found" }, status: :not_found
-    end
-
-    def foreign_key_block
-      render json: { "error": "foreign key in use" }, status: :internal_server_error
-    end
-
-    def unauthorized
-      render json: { "error": "unauthorized or token expired" }, status: :unauthorized
     end
   end
 end

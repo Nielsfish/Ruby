@@ -9,7 +9,6 @@ class User < ApplicationRecord
     has_secure_password
 
     has_many :employees
-    has_many :gates
     has_many :managers
 end
 

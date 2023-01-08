@@ -26,6 +26,13 @@
               "type": "string",
               "description": "Request body",
               "required": true
+            },
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Token",
+              "required": true
             }
           ],
           "nickname": "V1::Managers#create",
@@ -37,7 +44,7 @@
       "path": "/v1/managers/{id}",
       "operations": [
         {
-          "summary": "Returns  manager's details",
+          "summary": "Returns the manager's details",
           "parameters": [
             {
               "paramType": "path",
@@ -56,7 +63,7 @@
       "path": "/v1/managers/{id}",
       "operations": [
         {
-          "summary": "Updates a manager's details",
+          "summary": "Updates the manager's details",
           "parameters": [
             {
               "paramType": "path",
@@ -76,7 +83,7 @@
               "paramType": "header",
               "name": "Authorization",
               "type": "string",
-              "description": "Authentication bearer token",
+              "description": "Token",
               "required": true
             }
           ],
@@ -102,7 +109,7 @@
               "paramType": "header",
               "name": "Authorization",
               "type": "string",
-              "description": "Authentication bearer token",
+              "description": "Token",
               "required": true
             }
           ],

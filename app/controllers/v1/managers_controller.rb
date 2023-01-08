@@ -1,52 +1,55 @@
 module V1
   class ManagersController < ApplicationController
     before_action :set_manager, only: %i[ show edit update destroy ]
+    before_action :authenticate_request, only: %i[ create update destroy ]
 
     swagger_controller :managers, 'Managers'
 
-    # GET /managers or /managers.json
+    # GET /managers
     swagger_api :index do
       summary 'Returns all managers\' details'
     end
+
     def index
       @managers = Manager.all
-      render json: @managers
+      render json: @managers, status: :ok
     end
 
-    # GET /managers/1 or /managers/1.json
+    # GET /managers/1
     swagger_api :show do
-      summary 'Returns  manager\'s details'
+      summary 'Returns the manager\'s details'
       param :path, :id, :integer, :required, "User ID"
     end
     def show
       render json: @manager, status: :ok
     end
 
-    # POST /managers or /managers.json
+    # POST /managers
     swagger_api :create do
       summary 'Creates a manager'
       param :body, :body, :string, :required, "Request body"
+      param :header, :Authorization, :string, :required, "Token"
     end
     def create
       @manager = Manager.new(manager_params)
 
       if @manager.save
-        render :show, status: :created, location: @manager
+        render json: @manager, status: :created
       else
         render json: @manager.errors, status: :unprocessable_entity
       end
     end
 
-    # PATCH/PUT /managers/1 or /managers/1.json
+    # PATCH/PUT /managers/1
     swagger_api :update do
-      summary 'Updates a manager\'s details'
+      summary 'Updates the manager\'s details'
       param :path, :id, :integer, :required, "User ID"
       param :body, :body, :string, :required, "Request body"
-      param :header, :Authorization, :string, :required, "Authentication bearer token"
+      param :header, :Authorization, :string, :required, "Token"
     end
     def update
       if @manager.update(manager_params)
-        render :show, status: :ok, location: @manager
+        render json: :show, status: :ok
       else
         render json: @manager.errors, status: :unprocessable_entity
       end
@@ -56,21 +59,20 @@ module V1
     swagger_api :destroy do
       summary 'Deletes a manager'
       param :path, :id, :integer, :required, "User ID"
-      param :header, :Authorization, :string, :required, "Authentication bearer token"
+      param :header, :Authorization, :string, :required, "Token"
     end
 
     def destroy
       @manager.destroy
-      head :no_content
+      render json: {"Status":"Deleted"}, status: :ok
     end
 
     private
-      # Use callbacks to share common setup or constraints between actions.
+
       def set_manager
         @manager = Manager.find(params[:id])
       end
 
-      # Only allow a list of trusted parameters through.
       def manager_params
         params.permit(:user_id)
       end

@@ -1,11 +1,12 @@
 module V1
+
   class PositionsController < ApplicationController
     before_action :set_position, only: %i[ show edit update destroy ]
-    before_action :authenticate_request, only: [ :destroy ]
+    before_action :authenticate_request, only: %i[ create update destroy ]
 
     swagger_controller :positions, 'Positions'
 
-    # GET /positions or /positions.json
+    # GET /positions
     swagger_api :index do
       summary 'Returns all positions\' details'
     end
@@ -15,7 +16,7 @@ module V1
       render json: @positions, status: :ok
     end
 
-    # GET /positions/1 or /positions/1.json
+    # GET /positions/1
     swagger_api :show do
       summary 'Returns a position\'s details'
       param :path, :id, :integer, :required, "User ID"
@@ -25,10 +26,11 @@ module V1
       @position = Position.find(params[:id])
     end
 
-    # POST /positions or /positions.json
+    # POST /positions
     swagger_api :create do
       summary 'Creates a position'
       param :body, :body, :string, :required, "Request body"
+      param :header, :Authorization, :string, :required, "Token"
     end
 
     def create
@@ -41,17 +43,17 @@ module V1
       end
     end
 
-    # PATCH/PUT /positions/1 or /positions/1.json
+    # PATCH/PUT /positions/1
     swagger_api :update do
       summary 'Updates a position\'s details'
       param :path, :id, :integer, :required, "User ID"
       param :body, :body, :string, :required, "Request body"
-      param :header, :Authorization, :string, :required, "Authentication bearer token"
+      param :header, :Authorization, :string, :required, "Token"
     end
 
     def update
       if @position.update(position_params)
-        render :show, status: :ok, location: @position
+        render json: :show, status: :ok
       else
         render json: @position.errors, status: :unprocessable_entity
       end
@@ -59,23 +61,22 @@ module V1
 
     # DELETE /users/1
     swagger_api :destroy do
-      summary 'Deletes a position '
+      summary 'Deletes a position'
       param :path, :id, :integer, :required, "User ID"
-      param :header, :Authorization, :string, :required, "Authentication bearer token"
+      param :header, :Authorization, :string, :required, "Token"
     end
 
     def destroy
       @position.destroy
-      render json: {"Status":"Deleted"}, status: :ok
+      render json: { "Status":"Deleted" }, status: :ok
     end
 
     private
-      # Use callbacks to share common setup or constraints between actions.
+
       def set_position
         @position = Position.find(params[:id])
       end
 
-      # Only allow a list of trusted parameters through.
       def position_params
         params.permit(:position_name, :salary)
       end

@@ -1,13 +1,14 @@
 module V1
   class RegistersController < ApplicationController
     before_action :set_register, only: %i[ show edit update destroy ]
+    before_action :authenticate_request, only: %i[ index show create update destroy ]
 
     swagger_controller :registers, 'Registers'
 
-
-    # GET /registers or /registers.json
+    # GET /registers
     swagger_api :index do
       summary 'Returns all registers\' details'
+      param :header, :Authorization, :string, :required, "Token"
     end
 
     def index
@@ -15,20 +16,22 @@ module V1
       render json: @registers, status: :ok
     end
 
-    # GET /registers/1 or /registers/1.json
+    # GET /registers/1
     swagger_api :show do
       summary 'Returns a register\'s details'
       param :path, :id, :integer, :required, "User ID"
+      param :header, :Authorization, :string, :required, "Token"
     end
 
     def show
       render json: @register, status: :ok
     end
 
-    # POST /registers or /registers.json
+    # POST /registers
     swagger_api :create do
       summary 'Creates a register'
       param :body, :body, :string, :required, "Request body"
+      param :header, :Authorization, :string, :required, "Token"
     end
 
     def create
@@ -40,12 +43,12 @@ module V1
       end
     end
 
-    # PATCH/PUT /registers/1 or /registers/1.json
+    # PATCH/PUT /registers/1
     swagger_api :update do
       summary 'Updates a register\'s details'
       param :path, :id, :integer, :required, "User ID"
       param :body, :body, :string, :required, "Request body"
-      param :header, :Authorization, :string, :required, "Authentication bearer token"
+      param :header, :Authorization, :string, :required, "Token"
     end
 
     def update
@@ -58,25 +61,24 @@ module V1
 
     # DELETE /registers/1
     swagger_api :destroy do
-      summary 'Deletes an user'
+      summary 'Deletes a register'
       param :path, :id, :integer, :required, "User ID"
-      param :header, :Authorization, :string, :required, "Authentication bearer token"
+      param :header, :Authorization, :string, :required, "Token"
     end
 
     def destroy
       @register.destroy
-      render json: { message: 'Successfully deleted' }, status: :ok
+      render json: { "Status":"Deleted" }, status: :ok
     end
 
     private
-      # Use callbacks to share common setup or constraints between actions.
+
       def set_register
         @register = Register.find(params[:id])
       end
 
-      # Only allow a list of trusted parameters through.
       def register_params
-        params.permit(:employee_id, :gate_id, :date_in, :time_in, :date_out, :time_out)
+        params.permit(:employee_id, :gate, :date_in, :time_in, :date_out, :time_out)
       end
   end
 end
